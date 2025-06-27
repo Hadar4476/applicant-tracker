@@ -76,83 +76,78 @@ export const RegisterForm = () => {
       onSubmit={handleSubmit}
     >
       {({ errors, touched, isSubmitting }) => (
-        <Form>
-          <Stack className="gap-3">
-            {error && <Alert severity="error">{error}</Alert>}
+        <Form className="w-full flex flex-col gap-4">
+          {error && <Alert severity="error">{error}</Alert>}
 
-            <Field
-              as={TextField}
-              name="name"
-              type="text"
-              label="Full Name"
-              fullWidth
-              variant="outlined"
-              error={touched.name && !!errors.name}
-              helperText={touched.name && errors.name}
-            />
+          <Field
+            as={TextField}
+            name="name"
+            type="text"
+            label="Full Name"
+            fullWidth
+            variant="outlined"
+            error={touched.name && !!errors.name}
+            helperText={touched.name && errors.name}
+          />
 
-            <Field
-              as={TextField}
-              name="email"
-              type="email"
-              label="Email"
-              fullWidth
-              variant="outlined"
-              error={touched.email && !!errors.email}
-              helperText={touched.email && errors.email}
-            />
+          <Field
+            as={TextField}
+            name="email"
+            type="email"
+            label="Email"
+            fullWidth
+            variant="outlined"
+            error={touched.email && !!errors.email}
+            helperText={touched.email && errors.email}
+          />
 
-            <Field
-              as={TextField}
-              name="password"
-              type="password"
-              label="Password"
-              fullWidth
-              variant="outlined"
-              error={touched.password && !!errors.password}
-              helperText={touched.password && errors.password}
-            />
+          <Field
+            as={TextField}
+            name="password"
+            type="password"
+            label="Password"
+            fullWidth
+            variant="outlined"
+            error={touched.password && !!errors.password}
+            helperText={touched.password && errors.password}
+          />
 
-            <Field
-              as={TextField}
-              name="confirmPassword"
-              type="password"
-              label="Confirm Password"
-              fullWidth
-              variant="outlined"
-              error={touched.confirmPassword && !!errors.confirmPassword}
-              helperText={touched.confirmPassword && errors.confirmPassword}
-            />
+          <Field
+            as={TextField}
+            name="confirmPassword"
+            type="password"
+            label="Confirm Password"
+            fullWidth
+            variant="outlined"
+            error={touched.confirmPassword && !!errors.confirmPassword}
+            helperText={touched.confirmPassword && errors.confirmPassword}
+          />
 
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              fullWidth
-              disabled={isSubmitting || registerMutation.isLoading}
-              sx={{ mt: 2 }}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              {isSubmitting || registerMutation.isLoading ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                "Create Account"
-              )}
-            </Button>
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            fullWidth
+            disabled={isSubmitting || registerMutation.isLoading}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            {isSubmitting || registerMutation.isLoading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Create Account"
+            )}
+          </Button>
 
-            <Box sx={{ textAlign: "center", mt: 2 }}>
-              <Typography variant="body2">
-                Already have an account?{" "}
-                <NextLink href="/auth/login" passHref>
-                  <Link
-                    component="span"
-                    className="text-blue-600 hover:text-blue-800 font-medium"
-                  >
-                    Sign in here
-                  </Link>
-                </NextLink>
-              </Typography>
-            </Box>
+          <Stack className="flex-row items-center justify-center gap-2">
+            <Typography variant="body2">Already have an account?</Typography>
+            <NextLink href="/auth/login" passHref>
+              <Link
+                component="span"
+                className="text-blue-600 hover:text-blue-800 font-medium"
+              >
+                Sign in here
+              </Link>
+            </NextLink>
           </Stack>
         </Form>
       )}

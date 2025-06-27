@@ -10,6 +10,7 @@ import {
   CircularProgress,
   Link,
   Typography,
+  Stack,
 } from "@mui/material";
 import { api } from "../../utils/api";
 import { useAuthStore } from "../../store/authStore";
@@ -52,66 +53,62 @@ export const LoginForm = () => {
       onSubmit={handleSubmit}
     >
       {({ errors, touched, isSubmitting }) => (
-        <Form>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            {error && (
-              <Alert severity="error" sx={{ mb: 2 }}>
-                {error}
-              </Alert>
+        <Form className="w-full flex flex-col gap-4">
+          {error && (
+            <Alert severity="error" sx={{ mb: 2 }}>
+              {error}
+            </Alert>
+          )}
+
+          <Field
+            as={TextField}
+            name="email"
+            type="email"
+            label="Email"
+            fullWidth
+            variant="outlined"
+            error={touched.email && !!errors.email}
+            helperText={touched.email && errors.email}
+          />
+
+          <Field
+            as={TextField}
+            name="password"
+            type="password"
+            label="Password"
+            fullWidth
+            variant="outlined"
+            error={touched.password && !!errors.password}
+            helperText={touched.password && errors.password}
+          />
+
+          <Button
+            type="submit"
+            variant="contained"
+            size="large"
+            fullWidth
+            disabled={isSubmitting || loginMutation.isLoading}
+            sx={{ mt: 2 }}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            {isSubmitting || loginMutation.isLoading ? (
+              <CircularProgress size={24} color="inherit" />
+            ) : (
+              "Sign In"
             )}
+          </Button>
 
-            <Field
-              as={TextField}
-              name="email"
-              type="email"
-              label="Email"
-              fullWidth
-              variant="outlined"
-              error={touched.email && !!errors.email}
-              helperText={touched.email && errors.email}
-            />
-
-            <Field
-              as={TextField}
-              name="password"
-              type="password"
-              label="Password"
-              fullWidth
-              variant="outlined"
-              error={touched.password && !!errors.password}
-              helperText={touched.password && errors.password}
-            />
-
-            <Button
-              type="submit"
-              variant="contained"
-              size="large"
-              fullWidth
-              disabled={isSubmitting || loginMutation.isLoading}
-              sx={{ mt: 2 }}
-              className="bg-blue-600 hover:bg-blue-700"
-            >
-              {isSubmitting || loginMutation.isLoading ? (
-                <CircularProgress size={24} color="inherit" />
-              ) : (
-                "Sign In"
-              )}
-            </Button>
-
-            <Box sx={{ textAlign: "center", mt: 2 }}>
-              <Typography variant="body2">
-                Don't have an account?{" "}
-                <NextLink href="/auth/register" passHref>
-                  <Link
-                    component="span"
-                    className="text-blue-600 hover:text-blue-800 font-medium"
-                  >
-                    Sign up here
-                  </Link>
-                </NextLink>
-              </Typography>
-            </Box>
-          </Box>
+          <Stack className="flex-row items-center justify-center gap-2">
+            <Typography variant="body2">Don't have an account?</Typography>
+            <NextLink href="/auth/register" passHref>
+              <Link
+                component="span"
+                className="text-blue-600 hover:text-blue-800 font-medium"
+              >
+                Sign up here
+              </Link>
+            </NextLink>
+          </Stack>
         </Form>
       )}
     </Formik>
