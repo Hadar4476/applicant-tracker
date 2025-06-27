@@ -23,7 +23,7 @@ export const authRouter = createTRPCRouter({
       if (existingUser) {
         throw new TRPCError({
           code: "CONFLICT",
-          message: "User with this email already exists",
+          message: "Email is already taken",
         });
       }
 

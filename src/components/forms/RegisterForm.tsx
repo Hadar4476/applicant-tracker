@@ -10,22 +10,28 @@ import {
   CircularProgress,
   Link,
   Typography,
+  Stack,
 } from "@mui/material";
 import { api } from "../../utils/api";
 import { useAuthStore } from "../../store/authStore";
 import NextLink from "next/link";
 
-const RegisterSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(2, "Name must be at least 2 characters")
-    .required("Name is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
+const validationSchema = Yup.object().shape({
+  name: Yup.string().trim().required("Name is required"),
+  email: Yup.string()
+    .email("Invalid email address")
+    .trim()
+    .required("Email is required"),
   password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
+    .min(8, "Password must be at least 8 characters")
+    .matches(/[A-Z]/, "Password must contain at least one uppercase letter")
+    .matches(/[a-z]/, "Password must contain at least one lowercase letter")
+    .matches(
+      /[!@#$%^&*(),.?":{}|<>]/,
+      "Password must contain at least one special character"
+    )
+    .trim()
     .required("Password is required"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "Passwords must match")
-    .required("Please confirm your password"),
 });
 
 interface RegisterFormValues {
@@ -34,6 +40,13 @@ interface RegisterFormValues {
   password: string;
   confirmPassword: string;
 }
+
+const initialValues: RegisterFormValues = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 export const RegisterForm = () => {
   const router = useRouter();
@@ -58,18 +71,14 @@ export const RegisterForm = () => {
 
   return (
     <Formik
-      initialValues={{ name: "", email: "", password: "", confirmPassword: "" }}
-      validationSchema={RegisterSchema}
+      initialValues={initialValues}
+      validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       {({ errors, touched, isSubmitting }) => (
         <Form>
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-            {error && (
-              <Alert severity="error" sx={{ mb: 2 }}>
-                {error}
-              </Alert>
-            )}
+          <Stack className="gap-3">
+            {error && <Alert severity="error">{error}</Alert>}
 
             <Field
               as={TextField}
@@ -144,7 +153,7 @@ export const RegisterForm = () => {
                 </NextLink>
               </Typography>
             </Box>
-          </Box>
+          </Stack>
         </Form>
       )}
     </Formik>
