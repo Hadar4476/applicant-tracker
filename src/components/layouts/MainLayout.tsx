@@ -10,6 +10,7 @@ import {
   Menu,
   MenuItem,
   IconButton,
+  Stack,
 } from "@mui/material";
 import { AccountCircle, ExitToApp } from "@mui/icons-material";
 import { useState } from "react";
@@ -48,7 +49,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   return (
     <AuthGuard requireAuth={true}>
-      <Box sx={{ flexGrow: 1 }}>
+      <Stack className="min-h-screen">
         <AppBar position="static" className="bg-blue-600">
           <Toolbar>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -97,10 +98,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
             </Box>
           </Toolbar>
         </AppBar>
-        <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          {children}
-        </Container>
-      </Box>
+        <main className="flex-1 p-6">
+          <Container maxWidth="lg">{children}</Container>
+        </main>
+      </Stack>
     </AuthGuard>
   );
 };

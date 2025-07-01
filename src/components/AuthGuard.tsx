@@ -44,45 +44,29 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
     return () => clearTimeout(timer);
   }, [isAuthenticated, isInitialized, requireAuth, router, redirectTo]);
 
+  const appLoader = (
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+    >
+      <CircularProgress />
+    </Box>
+  );
+
   // Show loading while store is initializing or during auth checks
   if (!isInitialized || isLoading || !isReady) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return appLoader;
   }
 
   // Handle redirects - show loading during redirect
   if (requireAuth && !isAuthenticated && !router.pathname.startsWith("/auth")) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return appLoader;
   }
 
   if (!requireAuth && isAuthenticated && router.pathname.startsWith("/auth")) {
-    return (
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        minHeight="100vh"
-      >
-        <CircularProgress />
-      </Box>
-    );
+    return appLoader;
   }
 
   return <>{children}</>;

@@ -20,3 +20,56 @@ model User {
 
     @@map("users")
 }
+
+model Job {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  
+  // Requirements and qualifications
+  requirements String[]
+  advantages     String[]
+  
+  // Timestamps
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations (for future use)
+  applications Application[]
+  
+  @@map("jobs")
+}
+
+model Application {
+  id        String            @id @default(cuid())
+  jobId     String
+  userId    String            // Will connect to User model later
+  
+  // Application status tracking
+  status    ApplicationStatus @default(PENDING)
+  
+  // Application data
+  resumeUrl   String?
+  
+  // Timestamps
+  appliedAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  // Relations
+  job         Job @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  
+  @@unique([jobId, userId]) // Prevent duplicate applications
+  @@map("applications")
+}
+
+enum ApplicationStatus {
+  PENDING
+  REVIEWING
+  SHORTLISTED
+  INTERVIEW_SCHEDULED
+  INTERVIEWED
+  OFFER_EXTENDED
+  HIRED
+  REJECTED
+  WITHDRAWN
+}

@@ -3,6 +3,7 @@ import Head from "next/head";
 import { MainLayout } from "../components/layouts/MainLayout";
 import { Paper, Typography, Grid, Card, CardContent, Box } from "@mui/material";
 import { useAuthStore } from "../store/authStore";
+import PostsTable from "~/components/common/PostTable";
 
 const DashboardPage: NextPage = () => {
   const { user } = useAuthStore();
@@ -78,6 +79,8 @@ const DashboardPage: NextPage = () => {
               </Card>
             </Grid>
           </Grid>
+
+          <PostsTable />
         </Box>
       </MainLayout>
     </>
