@@ -1,5 +1,6 @@
 How to generate a new prisma schema?
 
 - stop application from running
+- run "npx prisma migrate dev --name init"
 - run "npx prisma generate"
 - run "npx prisma studio"

@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { Container, Paper, Stack, Typography } from "@mui/material";
-import { AuthGuard } from "../AuthGuard";
+import AuthGuard from "../AuthGuard";
 
 interface AuthLayoutProps {
   children: ReactNode;

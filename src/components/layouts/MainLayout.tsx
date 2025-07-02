@@ -9,13 +9,12 @@ import {
   Menu,
   MenuItem,
   IconButton,
-  Stack,
 } from "@mui/material";
 import { AccountCircle, ExitToApp } from "@mui/icons-material";
 import { useState } from "react";
-import { useAuthStore } from "../../store/authStore";
-import { AuthGuard } from "../AuthGuard";
-import { api } from "../../utils/api";
+import { useAuthStore } from "~/store/authStore";
+import AuthGuard from "../AuthGuard";
+import { api } from "~/utils/api";
 import AppDrawer from "../common/AppDrawer";
 
 interface MainLayoutProps {

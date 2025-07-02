@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import { AuthLayout } from "../../components/layouts/AuthLayout";
-import { RegisterForm } from "../../components/forms/RegisterForm";
+import { AuthLayout } from "~/components/layouts/AuthLayout";
+import { RegisterForm } from "~/components/forms/RegisterForm";
 
 const RegisterPage: NextPage = () => {
   return (

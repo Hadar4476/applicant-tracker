@@ -12,8 +12,8 @@ import {
   Typography,
   Stack,
 } from "@mui/material";
-import { api } from "../../utils/api";
-import { useAuthStore } from "../../store/authStore";
+import { api } from "~/utils/api";
+import { useAuthStore } from "~/store/authStore";
 import NextLink from "next/link";
 
 const LoginSchema = Yup.object().shape({

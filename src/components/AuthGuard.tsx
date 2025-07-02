@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { useAuthStore } from "../store/authStore";
-import { CircularProgress, Box } from "@mui/material";
+import { useAuthStore } from "~/store/authStore";
+import AppLoader from "./common/AppLoader";
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -9,11 +9,11 @@ interface AuthGuardProps {
   redirectTo?: string;
 }
 
-export const AuthGuard: React.FC<AuthGuardProps> = ({
+const AuthGuard = ({
   children,
   requireAuth = true,
   redirectTo = "/dashboard",
-}) => {
+}: AuthGuardProps) => {
   const router = useRouter();
   const { isAuthenticated, isInitialized, isLoading } = useAuthStore();
   const [isReady, setIsReady] = useState(false);
@@ -44,30 +44,21 @@ export const AuthGuard: React.FC<AuthGuardProps> = ({
     return () => clearTimeout(timer);
   }, [isAuthenticated, isInitialized, requireAuth, router, redirectTo]);
 
-  const appLoader = (
-    <Box
-      display="flex"
-      justifyContent="center"
-      alignItems="center"
-      minHeight="100vh"
-    >
-      <CircularProgress />
-    </Box>
-  );
-
   // Show loading while store is initializing or during auth checks
   if (!isInitialized || isLoading || !isReady) {
-    return appLoader;
+    return <AppLoader sx={{ minHeight: "100vh" }} />;
   }
 
   // Handle redirects - show loading during redirect
   if (requireAuth && !isAuthenticated && !router.pathname.startsWith("/auth")) {
-    return appLoader;
+    return <AppLoader sx={{ minHeight: "100vh" }} />;
   }
 
   if (!requireAuth && isAuthenticated && router.pathname.startsWith("/auth")) {
-    return appLoader;
+    return <AppLoader sx={{ minHeight: "100vh" }} />;
   }
 
   return <>{children}</>;
 };
+
+export default AuthGuard;

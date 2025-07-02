@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
 import { createTRPCRouter, publicProcedure, protectedProcedure } from "../trpc";
-import { hashPassword, comparePassword, signToken } from "../../../lib/auth";
+import { hashPassword, comparePassword, signToken } from "~/lib/auth";
 
 export const authRouter = createTRPCRouter({
   register: publicProcedure

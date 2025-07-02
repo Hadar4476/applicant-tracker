@@ -1,9 +1,9 @@
 import { type AppType } from "next/app";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { CssBaseline } from "@mui/material";
-import { AuthProvider } from "../components/AuthProvider";
-import { api } from "../utils/api";
-import "../styles/globals.css";
+import { AuthProvider } from "~/components/AuthProvider";
+import { api } from "~/utils/api";
+import "~/styles/globals.css";
 
 const theme = createTheme({
   palette: {

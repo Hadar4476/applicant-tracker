@@ -1,9 +1,8 @@
 import { NextPage } from "next";
 import Head from "next/head";
-import { MainLayout } from "../../components/layouts/MainLayout";
-import { Typography, Grid, Card, CardContent, Box } from "@mui/material";
-import { useAuthStore } from "../../store/authStore";
-import PostsTable from "~/components/common/PostTable";
+import { MainLayout } from "~/components/layouts/MainLayout";
+import { Typography, Card, CardContent, Box } from "@mui/material";
+import { useAuthStore } from "~/store/authStore";
 
 const DashboardPage: NextPage = () => {
   const { user } = useAuthStore();

@@ -1,10 +1,12 @@
-import { Box } from "@mui/material";
 import { NextPage } from "next";
 import Head from "next/head";
-import PostsTable from "~/components/common/PostTable";
+import AppDataTable from "~/components/common/AppDataTable";
+import { api } from "~/utils/api";
 import { MainLayout } from "~/components/layouts/MainLayout";
 
 const JobsPage: NextPage = () => {
+  const { data, isLoading, error } = api.jobs.getAll.useQuery();
+
   return (
     <>
       <Head>
@@ -12,7 +14,14 @@ const JobsPage: NextPage = () => {
         <meta name="description" content="Manage jobs" />
       </Head>
       <MainLayout title="Jobs">
-        <PostsTable />
+        <AppDataTable
+          title="Jobs Table"
+          description="Jobs Table"
+          data={data?.jobs ?? []}
+          config={{
+            excludeKeys: ["id", "requirements", "advantages", "updatedAt"],
+          }}
+        />
       </MainLayout>
     </>
   );
