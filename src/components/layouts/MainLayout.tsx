@@ -3,7 +3,6 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Button,
   Box,
   Container,
   Avatar,
@@ -17,12 +16,14 @@ import { useState } from "react";
 import { useAuthStore } from "../../store/authStore";
 import { AuthGuard } from "../AuthGuard";
 import { api } from "../../utils/api";
+import AppDrawer from "../common/AppDrawer";
 
 interface MainLayoutProps {
+  title: string;
   children: ReactNode;
 }
 
-export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+export const MainLayout: React.FC<MainLayoutProps> = ({ title, children }) => {
   const { user, logout } = useAuthStore();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const logoutMutation = api.auth.logout.useMutation();
@@ -49,59 +50,63 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
 
   return (
     <AuthGuard requireAuth={true}>
-      <Stack className="min-h-screen">
-        <AppBar position="static" className="bg-blue-600">
-          <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Dashboard
-            </Typography>
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Typography variant="body2" sx={{ mr: 2 }}>
-                Welcome, {user?.name}
+      <Box className="min-h-screen flex">
+        <AppDrawer />
+
+        <Box className="flex-1">
+          <AppBar position="static" className="bg-blue-600">
+            <Toolbar>
+              <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+                {title}
               </Typography>
-              <IconButton
-                size="large"
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <Avatar sx={{ width: 32, height: 32, bgcolor: "primary.dark" }}>
-                  {user?.name?.charAt(0).toUpperCase()}
-                </Avatar>
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>
-                  <AccountCircle sx={{ mr: 1 }} />
-                  Profile
-                </MenuItem>
-                <MenuItem onClick={handleLogout}>
-                  <ExitToApp sx={{ mr: 1 }} />
-                  Logout
-                </MenuItem>
-              </Menu>
-            </Box>
-          </Toolbar>
-        </AppBar>
-        <main className="flex-1 p-6">
-          <Container maxWidth="lg">{children}</Container>
-        </main>
-      </Stack>
+              <Box sx={{ display: "flex", alignItems: "center" }}>
+                <Typography variant="body2">Welcome, {user?.name}</Typography>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleMenu}
+                  color="inherit"
+                >
+                  <Avatar
+                    sx={{ width: 32, height: 32, bgcolor: "primary.dark" }}
+                  >
+                    {user?.name?.charAt(0).toUpperCase()}
+                  </Avatar>
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={anchorEl}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <MenuItem onClick={handleClose}>
+                    <AccountCircle sx={{ mr: 1 }} />
+                    Profile
+                  </MenuItem>
+                  <MenuItem onClick={handleLogout}>
+                    <ExitToApp sx={{ mr: 1 }} />
+                    Logout
+                  </MenuItem>
+                </Menu>
+              </Box>
+            </Toolbar>
+          </AppBar>
+          <main className="flex-1 p-6">
+            <Container maxWidth="lg">{children}</Container>
+          </main>
+        </Box>
+      </Box>
     </AuthGuard>
   );
 };
